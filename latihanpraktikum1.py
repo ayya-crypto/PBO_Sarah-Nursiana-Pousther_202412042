@@ -1,26 +1,30 @@
-class Person:
-    def __init__(self, nama, umur):
-        self.nama = nama
-        self.umur = umur
+# Membuat class Buku
+class Buku:
+    def __init__(self, judul, penulis, tahun):
+        self.judul = judul
+        self.penulis = penulis
+        self.tahun = tahun
 
-    def info(self):
-        return f"Person: {self.nama} ({self.umur} tahun)"
 
-class Mahasiswa(Person):
-    def __init__(self, nama, umur, nim):
-        # Memanggil konstruktor class induk (Person)
-        super().__init__(nama, umur)
-        # Menambahkan atribut baru
-        self.nim = nim
+# Membuat list berisi 5 objek buku
+daftar_buku = [
+    Buku("Pemrograman Python", "Hasan", 2020),
+    Buku("Basis Data", "Ainun", 2019),
+    Buku("Struktur Data", "Herdi", 2021),
+    Buku("Algoritma dan Pemrograman", "Zaila", 2018),
+    Buku("Pemrograman Berorientasi Objek", "Sheila", 2022)
+]
 
-    def info(self):
-        # Perbaikan di sini: Memastikan kurung kurawal digunakan untuk semua variabel 
-        # dan format output lebih jelas.
-        return f"Mahasiswa: {self.nama}, NIM {self.nim} ({self.umur} tahun)"
 
-# Instansiasi
-p = Person("Karel", 30)
-m = Mahasiswa("Riana", 20, "202412076")
+# Fungsi untuk mencari buku berdasarkan penulis
+def cari_buku_berdasarkan_penulis(daftar_buku, nama_penulis):
+    hasil = []
+    for buku in daftar_buku:
+        if buku.penulis.lower() == nama_penulis.lower():
+            hasil.append(buku)
+    return hasil
+hasil_pencarian = cari_buku_berdasarkan_penulis(daftar_buku, "Hasan")
 
-print(p.info())
-print(m.info())
+for buku in hasil_pencarian:
+    print(buku.judul, "-", buku.tahun)
+

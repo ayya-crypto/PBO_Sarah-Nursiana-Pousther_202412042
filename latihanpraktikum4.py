@@ -1,28 +1,56 @@
-# Berdasarkan image_258821.png dan permintaan sebelumnya
-class Penulis:
-    def __init__(self, nama):
-        self.nama = nama
+import tkinter as tk
+from tkinter import messagebox
 
-    def info_penulis(self):
-        return f"Penulis: {self.nama}"
+class KonversiSuhu:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Konversi Suhu Celsius ke Fahrenheit")
+        self.root.geometry("300x220")
 
-# Berdasarkan image_23be82.png (Composition)
-class Buku:
-    def __init__(self, judul, penulis):
-        self.judul = judul
-        # Composition: Objek Penulis adalah atribut dari objek Buku
-        self.penulis = penulis 
+        # Label input
+        self.label_input = tk.Label(
+            root,
+            text="Masukkan Suhu (Celsius):",
+            font=("Arial", 11)
+        )
+        self.label_input.pack(pady=10)
 
-    def info_buku(self):
-        # Memanggil metode dari objek Penulis yang merupakan bagian dari Buku
-        return f"Judul Buku: {self.judul}\nOleh: {self.penulis.info_penulis()}"
+        # Entry Celsius
+        self.entry_celsius = tk.Entry(root, width=25)
+        self.entry_celsius.pack(pady=5)
 
-# Instansiasi 
-# 1. Buat objek Penulis (komponen)
-penulis_a = Penulis("Andrea Hirata")
+        # Button konversi
+        self.button_konversi = tk.Button(
+            root,
+            text="Konversi",
+            command=self.konversi_suhu
+        )
+        self.button_konversi.pack(pady=10)
 
-# 2. Buat objek Buku, memasukkan objek Penulis ke dalamnya
-buku1 = Buku("Laskar Pelangi", penulis_a)
+        # Label hasil
+        self.label_hasil = tk.Label(
+            root,
+            text="Hasil: -",
+            font=("Arial", 11)
+        )
+        self.label_hasil.pack(pady=10)
 
-# 3. Cetak informasi
-print(buku1.info_buku())
+    def konversi_suhu(self):
+        try:
+            # Validasi input: harus berupa angka
+            celsius = float(self.entry_celsius.get())
+            fahrenheit = (celsius * 9 / 5) + 32
+            self.label_hasil.config(
+                text=f"Hasil: {fahrenheit:.2f} °F"
+            )
+        except ValueError:
+            messagebox.showwarning(
+                "Input Tidak Valid",
+                "Masukkan suhu dalam bentuk angka!"
+            )
+            self.entry_celsius.delete(0, tk.END)
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = KonversiSuhu(root)
+    root.mainloop()

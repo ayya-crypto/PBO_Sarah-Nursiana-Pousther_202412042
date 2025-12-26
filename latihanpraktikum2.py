@@ -1,35 +1,66 @@
-import math
+# Membuat class Pelanggan
+class Pelanggan:
+    def __init__(self, id_pelanggan, nama, email):
+        self.id_pelanggan = id_pelanggan
+        self.nama = nama
+        self.email = email
 
-class Bentuk:
-    def __init__(self):
-        # Tambahkan __init__ jika kelas ini akan diinisialisasi
-        pass
-        
-    def luas(self):
-        return 0
+# Membuat dictionary pelanggan (id sebagai key)
+data_pelanggan = {
+    "PL001": Pelanggan("PL001", "Hasan", "hasan@gmail.com"),
+    "PL002": Pelanggan("PL002", "Ainun", "ainun@gmail.com"),
+    "PL003": Pelanggan("PL003", "Sheila", "sheila@gmail.com")
+}
 
-class Persegi(Bentuk):
-    def __init__(self, sisi):
-        self.sisi = sisi
+# Fungsi untuk menambah pelanggan
+def tambah_pelanggan(data_pelanggan, id_pelanggan, nama, email):
+    if id_pelanggan in data_pelanggan:
+        print("ID pelanggan sudah ada.")
+    else:
+        data_pelanggan[id_pelanggan] = Pelanggan(id_pelanggan, nama, email)
+        print("Pelanggan berhasil ditambahkan.")
 
-    def luas(self):
-        return self.sisi * self.sisi
+# Fungsi untuk menghapus pelanggan
+def hapus_pelanggan(data_pelanggan, id_pelanggan):
+    if id_pelanggan in data_pelanggan:
+        del data_pelanggan[id_pelanggan]
+        print("Pelanggan berhasil dihapus.")
+    else:
+        print("ID pelanggan tidak ditemukan.")
 
-class Lingkaran(Bentuk):
-    def __init__(self, r):
-        self.r = r
+# Fungsi untuk mencari pelanggan
+def cari_pelanggan(data_pelanggan, id_pelanggan):
+    if id_pelanggan in data_pelanggan:
+        return data_pelanggan[id_pelanggan]
+    else:
+        return None
 
-    def luas(self):
-        # Pastikan menggunakan math.pi
-        return math.pi * self.r * self.r
+# --- BAGIAN UNTUK MENGHASILKAN OUTPUT ---
 
-# Demonstrasi Polymorphism (Perbaikan pada instansiasi)
-bentuk_list = [
-    Bentuk(),
-    Persegi(4),    # Instansiasi yang benar
-    Lingkaran(7)   # Instansiasi yang benar
-]
+# 1. Menampilkan Daftar Pelanggan Awal
+print("=== Daftar Pelanggan ===")
+for p in data_pelanggan.values():
+    print("-" * 30)
+    print(f"ID    : {p.id_pelanggan}")
+    print(f"Nama  : {p.nama}")
+    print(f"Email : {p.email}")
+print("-" * 30)
 
-for b in bentuk_list:
-    # Menggunakan f-string untuk output yang rapi
-    print(f"{b.__class__.__name__} -> luas = {b.luas():.2f}")
+# 2. Contoh Operasi
+print("\n=== Contoh Operasi ===")
+
+# Tambah pelanggan baru (PL004)
+tambah_pelanggan(data_pelanggan, "PL004", "Zaila", "zaila@gmail.com")
+
+# Cari pelanggan (PL002)
+p_cari = cari_pelanggan(data_pelanggan, "PL002")
+if p_cari:
+    print(f"\nPelanggan ditemukan: {p_cari.nama} - {p_cari.email}")
+
+# Hapus pelanggan (PL001)
+hapus_pelanggan(data_pelanggan, "PL001")
+
+# 3. Menampilkan Daftar Pelanggan Terbaru
+print("\n=== Daftar Pelanggan Terbaru ===")
+for p in data_pelanggan.values():
+    print(f"{p.id_pelanggan} | {p.nama} | {p.email}")
